@@ -4,6 +4,8 @@ from io import BytesIO
 from PIL import Image
 import base64
 
+st.set_page_config(page_title='GPT-4 Vision', page_icon='👁️')
+
 if 'initialized' not in st.session_state:
     st.session_state['history'] = [{'role': 'system', 'content': ''}]
     st.session_state['cost'] = 0.0
