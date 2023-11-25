@@ -50,7 +50,18 @@ with chatTab:
     text_input = st.text_input('Prompt', '')
     img_input = st.file_uploader('Images', accept_multiple_files=True)
 
-    cols = st.columns(9)
+    # set up button layout
+    st.markdown(
+        """
+        <style>
+            div[data-testid="column"]:nth-of-type(2)
+            {
+                text-align: end;
+            }
+        </style>
+        """, unsafe_allow_html=True
+    )
+    cols = st.columns(2)
 
     # send api request
     with cols[0]:
@@ -60,18 +71,17 @@ with chatTab:
                     msg = {'role': 'user', 'content': []}
                     if text_input:
                         msg['content'].append({'type': 'text', 'text': text_input})
-                    if img_input:
-                        for img in img_input:
-                            encoded_img = base64.b64encode(img.read()).decode('utf-8')
-                            msg['content'].append(
-                                {
-                                    'type': 'image_url',
-                                    'image_url': {
-                                        'url': f'data:image/jpeg;base64,{encoded_img}',
-                                        'detail': image_detail
-                                    }
+                    for img in img_input:
+                        encoded_img = base64.b64encode(img.read()).decode('utf-8')
+                        msg['content'].append(
+                            {
+                                'type': 'image_url',
+                                'image_url': {
+                                    'url': f'data:image/jpeg;base64,{encoded_img}',
+                                    'detail': image_detail
                                 }
-                            )
+                            }
+                        )
                     st.session_state['history'].append(msg)
                     history = (
                         st.session_state['history']
@@ -80,10 +90,10 @@ with chatTab:
                     )
                     client = OpenAI(api_key=api_key)
                     response = client.chat.completions.create(
-                        model = 'gpt-4-vision-preview',
-                        temperature = temperature,
-                        max_tokens = max_tokens,
-                        messages = history
+                        model='gpt-4-vision-preview',
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        messages=history
                     )
                     st.session_state['history'].append(
                         {'role': 'assistant', 'content': response.choices[0].message.content}
@@ -97,7 +107,7 @@ with chatTab:
                 st.warning('API Key required')
 
     # clear chat history
-    with cols[8]:
+    with cols[1]:
         if st.button('Clear'):
             st.session_state['history'] = [st.session_state['history'][0]]
             st.rerun()
