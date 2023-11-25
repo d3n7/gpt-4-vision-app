@@ -54,10 +54,6 @@ with chatTab:
     st.markdown(
         """
         <style>
-            div[data-testid="column"]:nth-of-type(1)
-            {
-                text-align: left;
-            }
             div[data-testid="column"]:nth-of-type(2)
             {
                 text-align: right;
@@ -65,7 +61,7 @@ with chatTab:
         </style>
         """, unsafe_allow_html=True
     )
-    cols = st.columns(2)
+    cols = st.columns([0.5, 0.5])
 
     # send api request
     with cols[0]:
