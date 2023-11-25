@@ -7,7 +7,6 @@ import base64
 if 'initialized' not in st.session_state:
     st.session_state['history'] = [{'role': 'system', 'content': ''}]
     st.session_state['cost'] = 0.0
-    st.session_state['client'] = OpenAI()
     st.session_state['initialized'] = True
 
 st.markdown('# GPT-4 Vision Client')
@@ -53,7 +52,7 @@ cols = st.columns(9)
 with cols[0]:
     if st.button('Send'):
         if api_key:
-            st.session_state['client'].api_key = api_key
+            client = OpenAI(api_key=api_key)
             if text_input or img_input:
                 msg = {'role': 'user', 'content': []}
                 if text_input:
@@ -76,7 +75,7 @@ with cols[0]:
                     if st.session_state['history'][0]['content']
                     else st.session_state['history'][1:]
                 )
-                response = st.session_state['client'].chat.completions.create(
+                response = client.chat.completions.create(
                     model = 'gpt-4-vision-preview',
                     temperature = temperature,
                     max_tokens = max_tokens,
