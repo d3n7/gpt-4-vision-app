@@ -9,6 +9,7 @@ if 'initialized' not in st.session_state:
     st.session_state['cost'] = 0.0
     st.session_state['initialized'] = True
 
+st.set_page_config(layout='wide')
 st.markdown('# GPT-4 Vision Client')
 api_key = st.text_input('OpenAI API Key', '', type='password')
 
