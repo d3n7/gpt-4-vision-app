@@ -54,6 +54,12 @@ with chatTab:
     st.markdown(
         """
         <style>
+            [data-testid="column"]
+            {
+                width: calc(33.3333% - 1rem) !important;
+                flex: 1 1 calc(33.3333% - 1rem) !important;
+                min-width: calc(33% - 1rem) !important;
+            }
             div[data-testid="column"]:nth-of-type(2)
             {
                 text-align: right;
