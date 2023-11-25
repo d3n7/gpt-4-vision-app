@@ -9,7 +9,6 @@ if 'initialized' not in st.session_state:
     st.session_state['cost'] = 0.0
     st.session_state['initialized'] = True
 
-st.set_page_config(layout='wide')
 st.markdown('# GPT-4 Vision Client')
 api_key = st.text_input('OpenAI API Key', '', type='password')
 
@@ -55,9 +54,13 @@ with chatTab:
     st.markdown(
         """
         <style>
+            div[data-testid="column"]:nth-of-type(1)
+            {
+                text-align: left;
+            }
             div[data-testid="column"]:nth-of-type(2)
             {
-                text-align: end;
+                text-align: right;
             }
         </style>
         """, unsafe_allow_html=True
