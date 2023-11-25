@@ -61,7 +61,7 @@ with chatTab:
         </style>
         """, unsafe_allow_html=True
     )
-    cols = st.columns([0.5, 0.5])
+    cols = st.columns(2)
 
     # send api request
     with cols[0]:
