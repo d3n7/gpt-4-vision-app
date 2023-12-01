@@ -46,7 +46,7 @@ with chatTab:
                             img = Image.open(BytesIO(base64.b64decode(i['image_url']['url'][23:])))
                             st.image(img)
         else:
-            with st.chat_message['assistant']:
+            with st.chat_message('assistant'):
                 msg_content = ''.join(['  ' + char if char == '\n' else char for char in msg['content']])  # fixes display issue
                 st.markdown('Assistant: ' + msg_content)
 
