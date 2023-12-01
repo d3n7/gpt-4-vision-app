@@ -37,16 +37,18 @@ with chatTab:
     # display chat
     for msg in st.session_state['history'][1:]:
         if msg['role'] == 'user':
-            for i in msg['content']:
-                if i['type'] == 'text':
-                    st.markdown(f"<span style='color: #c4c4c4'>You: {i['text']}</span>", unsafe_allow_html=True)
-                else:
-                    with st.expander('Attached Image'):
-                        img = Image.open(BytesIO(base64.b64decode(i['image_url']['url'][23:])))
-                        st.image(img)
+            with st.chat_message('user'):
+                for i in msg['content']:
+                    if i['type'] == 'text':
+                        st.write(i['text'])
+                    else:
+                        with st.expander('Attached Image'):
+                            img = Image.open(BytesIO(base64.b64decode(i['image_url']['url'][23:])))
+                            st.image(img)
         else:
-            msg_content = ''.join(['  ' + char if char == '\n' else char for char in msg['content']])  # fixes display issue
-            st.markdown('Assistant: ' + msg_content)
+            with st.chat_message['assistant']:
+                msg_content = ''.join(['  ' + char if char == '\n' else char for char in msg['content']])  # fixes display issue
+                st.markdown('Assistant: ' + msg_content)
 
     # get user inputs
     text_input = st.text_input('Prompt', '', key=st.session_state['counters'][0])
